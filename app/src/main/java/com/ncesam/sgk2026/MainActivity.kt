@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.ncesam.sgk2026.presentation.navigation.MainNavigator
 import com.ncesam.uikit.foundation.AppThemeProvider
 import com.ncesam.uikit.foundation.ScreenProvider
 
@@ -23,3 +24,4 @@ class MainActivity : ComponentActivity() {
 
     }
 }
+

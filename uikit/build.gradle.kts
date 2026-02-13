@@ -40,9 +40,6 @@ android {
 }
 
 dependencies {
-    debugImplementation(libs.showkase)
-    implementation(libs.showkase.annotation)
-    kspDebug(libs.showkase.processor)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

@@ -31,6 +31,7 @@ navigationCommonKtx = "2.9.6"
 uiGraphics = "1.10.2"
 runtimeVersion = "1.10.2"
 datastoreCore = "1.2.0"
+storytale = "0.0.4-alpha01+dev19"
 
 
 [libraries]
@@ -85,6 +86,7 @@ showkase-annotation = { module = "com.airbnb.android:showkase-annotation", versi
 showkase-processor = { module = "com.airbnb.android:showkase-processor", version.ref = "showkaseProcessor" }
 
 [plugins]
+storytale = { id = "org.jetbrains.compose.storytale", version.ref = "storytale" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version = "2.2.0" }

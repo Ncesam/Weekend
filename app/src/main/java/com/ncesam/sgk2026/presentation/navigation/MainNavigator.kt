@@ -1,6 +1,5 @@
 package com.ncesam.sgk2026.presentation.navigation
 
-import BottomTabs
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,10 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ncesam.sgk2026.domain.navigation.AppRoute
 import com.ncesam.uikit.components.AppBottomTabItem
 import com.ncesam.uikit.components.AppBottomTabItemType
 
@@ -44,7 +45,7 @@ fun MainNavigator() {
     }
     CompositionLocalProvider(
         LocalBottomTabs provides bottomTabs,
-        LocalNavigationManager provider navigationManager
+        LocalNavigationManager provides navigationManager
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Box(modifier = Modifier.weight(1f)) {
@@ -53,7 +54,6 @@ fun MainNavigator() {
                     startDestination = AppRoute.Splash,
                 ) {
                     authGraph(navController)
-                    mainGraph()
                 }
             }
 
@@ -61,18 +61,18 @@ fun MainNavigator() {
                 Row(modifier = Modifier.fillMaxWidth()) {
                     AppBottomTabItem(
                         variant = AppBottomTabItemType.Home,
-                        focused = currentDestination?.hierarchy?.any { destination -> destination.hasRoute<AppRoute.Main>() } == true) {
-                        navigationManager.navigate(AppRoute.Main, clearToRoute = AppRoute.Main)
+                        focused = currentDestination?.hierarchy?.any { destination -> destination.hasRoute<AppRoute.Profile>() } == true) {
+                        navigationManager.navigate(AppRoute.Profile, clearToRoute = AppRoute.Profile)
                     }
                     AppBottomTabItem(
                         variant = AppBottomTabItemType.Search,
-                        focused = currentDestination?.hierarchy?.any { destination -> destination.hasRoute<AppRoute.Search>() } == true) {
-                        navigationManager.navigate(AppRoute.Search, clearToRoute = AppRoute.Search)
+                        focused = currentDestination?.hierarchy?.any { destination -> destination.hasRoute<AppRoute.Profile>() } == true) {
+                        navigationManager.navigate(AppRoute.Profile, clearToRoute = AppRoute.Profile)
                     }
                     AppBottomTabItem(
                         variant = AppBottomTabItemType.Travels,
-                        focused = currentDestination?.hierarchy?.any { destination -> destination.hasRoute<AppRoute.Travels>() } == true) {
-                        navigationManager.navigate(AppRoute.Travels, clearToRoute = AppRoute.Travels)
+                        focused = currentDestination?.hierarchy?.any { destination -> destination.hasRoute<AppRoute.Profile>() } == true) {
+                        navigationManager.navigate(AppRoute.Profile, clearToRoute = AppRoute.Profile)
                     }
                     AppBottomTabItem(
                         variant = AppBottomTabItemType.Profile,

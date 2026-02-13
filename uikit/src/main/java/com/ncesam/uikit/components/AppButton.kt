@@ -84,7 +84,7 @@ fun AppButton(
     }
 
     Row(
-        modifier = modifier.clickable { onClick() },
+        modifier = modifier.clickable(enabled = style != AppButtonStyle.Inactive) { onClick() },
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

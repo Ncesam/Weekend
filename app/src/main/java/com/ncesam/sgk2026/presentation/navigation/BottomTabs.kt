@@ -1,4 +1,4 @@
-
+package com.ncesam.sgk2026.presentation.navigation
 
 class BottomTabs(var isVisible: Boolean = false) {
 
