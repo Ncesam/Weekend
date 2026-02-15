@@ -43,7 +43,7 @@ fun AppInput(
 ) {
     val colors = AppTheme.colors
     val typography = AppTheme.typography
-    val shape = RoundedCornerShape(5.dp)
+    val shape = RoundedCornerShape(10.dp)
 
     val isPassword = type == AppInputType.Password
     val isFilled = value.isNotBlank()
@@ -53,10 +53,13 @@ fun AppInput(
 
 
     var inputModifier = Modifier.fillMaxWidth()
-    inputModifier = if (errorText != null) inputModifier.background(
-        colors.error,
-        shape = shape
-    ) else inputModifier.background(colors.inputBackground, shape)
+    inputModifier = if (errorText != null) inputModifier
+        .background(colors.inputBackground)
+        .border(
+            1.dp,
+            colors.error,
+            shape = shape
+        ) else inputModifier.background(colors.inputBackground, shape)
 
     inputModifier = if (focused) inputModifier.border(
         1.dp,
@@ -206,7 +209,7 @@ fun PreviewAppInput() {
     AppThemeProvider {
         Column {
             AppInput(onChangeText = {}, onClickVisibility = {}) { }
-            AppInput(type = AppInputType.Password, onChangeText = {}, onClickVisibility = {}) { }
+            AppInput(type = AppInputType.Password, visiblePassword = false, value = "543534", onChangeText = {}, onClickVisibility = {}) { }
             AppInputSearch(onChangeText = {}) { }
         }
     }

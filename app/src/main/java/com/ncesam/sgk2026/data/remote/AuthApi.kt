@@ -16,7 +16,7 @@ interface AuthApi {
     @POST("/api/collections/users/auth-with-password")
     suspend fun login(@Body request: LoginRequest): Response<TokenWith<UserDto>>
 
-    @POST("/api/collections/users/record")
+    @POST("/api/collections/users/records")
     suspend fun register(@Body request: UserForm): Response<UserDto>
 
     @POST("/api/collections/users/auth-refresh")

@@ -1,7 +1,7 @@
 package com.ncesam.sgk2026.domain.navigation
 
+import com.ncesam.sgk2026.domain.models.Hotel
 import kotlinx.serialization.Serializable
-
 @Serializable
 sealed interface AppRoute {
 
@@ -32,4 +32,19 @@ sealed interface AppRoute {
 
     @Serializable
     object PinCode: AppRoute
+
+    @Serializable
+    object Main: AppRoute
+
+    @Serializable
+    data class Booking(val hotelId: String): AppRoute
+
+    @Serializable
+    data class Search(val value: String): AppRoute
+
+    @Serializable
+    object ShopCart: AppRoute
+
+    @Serializable
+    object Travels: AppRoute
 }

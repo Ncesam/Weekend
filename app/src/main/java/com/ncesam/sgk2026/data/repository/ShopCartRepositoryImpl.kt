@@ -10,6 +10,9 @@ import com.ncesam.sgk2026.domain.models.CartItem
 import com.ncesam.sgk2026.domain.models.CartItemForm
 import com.ncesam.sgk2026.domain.repository.ShopCartRepository
 import com.ncesam.sgk2026.domain.repository.TokenManager
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 
 class ShopCartRepositoryImpl(
@@ -17,9 +20,9 @@ class ShopCartRepositoryImpl(
     private val bookingApi: BookingApi,
     private val tokenManager: TokenManager
 ) : ShopCartRepository {
-    override suspend fun getAllItem(): Result<List<CartItem>> {
+    override suspend fun getAllItem(): Result<Flow<List<CartItem>>> {
         val entities = shopCartDao.getAll()
-        return Result.success(entities.map { entity -> entity.toDomain() })
+        return Result.success(entities.map { entity -> entity.map { entity -> entity.toDomain() } })
     }
 
     override suspend fun addShopCart(item: CartItemForm) {
@@ -49,8 +52,12 @@ class ShopCartRepositoryImpl(
         shopCartDao.deleteAll()
     }
 
+    override suspend fun delete(id: Int) {
+        shopCartDao.deleteItem(id)
+    }
+
     override suspend fun orderItems() {
-        val items = shopCartDao.getAll()
+        val items = shopCartDao.getAll().first()
         shopCartDao.deleteAll()
         tokenManager.getValidToken().map { token ->
             items.forEach { item ->

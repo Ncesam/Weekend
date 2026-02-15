@@ -56,6 +56,14 @@ object LightAppIcons {
         @Composable get() = painterResource(R.drawable.calendar)
     val Home: Painter
         @Composable get() = painterResource(R.drawable.home)
+    val Delete: Painter
+        @Composable get() = painterResource(R.drawable.delete)
+    val Biometry: Painter
+        @Composable get() = painterResource(R.drawable.biometry)
+
+    val Profile: Painter
+        @Composable get() = painterResource(R.drawable.profile)
+
 
 
 }

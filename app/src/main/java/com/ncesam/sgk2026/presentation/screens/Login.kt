@@ -11,14 +11,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ncesam.sgk2026.domain.navigation.AppRoute
+import com.ncesam.sgk2026.domain.state.LoginEffect
 import com.ncesam.sgk2026.domain.state.LoginEvent
 import com.ncesam.sgk2026.domain.state.LoginInputState
 import com.ncesam.sgk2026.domain.state.LoginState
+import com.ncesam.sgk2026.domain.state.RegistrationInputState
+import com.ncesam.sgk2026.presentation.navigation.AppNavigation
+import com.ncesam.sgk2026.presentation.viewModel.LoginViewModel
 import com.ncesam.uikit.components.AppButton
 import com.ncesam.uikit.components.AppButtonOAuth
 import com.ncesam.uikit.components.AppButtonOAuthType
@@ -28,19 +40,45 @@ import com.ncesam.uikit.components.AppInputType
 import com.ncesam.uikit.foundation.AppTheme
 import com.ncesam.uikit.foundation.AppThemeProvider
 import com.ncesam.uikit.foundation.ScreenProvider
+import kotlinx.coroutines.launch
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = koinViewModel()) {
-    val state = viewModel.
+    val state by viewModel.state.collectAsState()
+    val scope = rememberCoroutineScope()
 
+    val navigator = AppNavigation.navigator
+    val bottomTabs = AppNavigation.bottomTabs
+    bottomTabs.hide()
 
-    LoginContent()
+    val showSnackBar = ScreenProvider.showSnackBar
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is LoginEffect.ShowSnackBar -> {
+                    showSnackBar(effect.msg)
+                }
+
+                LoginEffect.GoToCreatePinCode -> {
+                    navigator.navigate(AppRoute.CreatePinCode)
+                }
+
+                LoginEffect.GoToRegistration -> {
+                    navigator.navigate(AppRoute.CreateProfile)
+                }
+            }
+        }
+    }
+
+    LoginContent(state) { event -> scope.launch { viewModel.onEvent(event) } }
 }
 
 
 @Composable
 fun LoginContent(state: LoginState, onEvent: (LoginEvent) -> Unit) {
-    var inputFocused = remember { LoginInputState() }
+    var inputFocused by remember { mutableStateOf(RegistrationInputState()) }
 
     val colors = AppTheme.colors
     val typography = AppTheme.typography
@@ -51,7 +89,7 @@ fun LoginContent(state: LoginState, onEvent: (LoginEvent) -> Unit) {
             .fillMaxSize()
             .background(colors.white)
             .padding(horizontal = 20.dp)
-            .padding(top=60.dp)
+            .padding(top = 60.dp)
             .imePadding()
             .statusBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -64,7 +102,7 @@ fun LoginContent(state: LoginState, onEvent: (LoginEvent) -> Unit) {
             BasicText(text = "Добро пожаловать!", style = typography.h1ExtraBold)
             BasicText(
                 text = "Войдите, чтобы пользоваться функциями приложения",
-                style = typography.textMedium
+                style = typography.textMedium.copy(textAlign = TextAlign.Center)
             )
         }
         Column(
@@ -79,29 +117,31 @@ fun LoginContent(state: LoginState, onEvent: (LoginEvent) -> Unit) {
                 onChangeText = { value ->
                     onEvent(LoginEvent.EmailChanged(value))
                 },
+                placeholder = "",
                 onClickVisibility = {})
             { focusState ->
                 inputFocused = inputFocused.copy(emailFocused = focusState.isFocused)
             }
             AppInput(
                 type = AppInputType.Password,
-                visiblePassword = inputFocused.passwordVisible,
+                visiblePassword = inputFocused.passwordVisibility,
                 focused = inputFocused.passwordFocused,
                 helperText = "Пароль",
                 value = state.password,
                 errorText = state.passwordError,
+                placeholder = "",
                 onChangeText = { value ->
                     onEvent(LoginEvent.PasswordChanged(value))
                 },
                 onClickVisibility = {
                     inputFocused =
-                        inputFocused.copy(passwordVisible = !inputFocused.passwordVisible)
+                        inputFocused.copy(passwordVisibility = !inputFocused.passwordVisibility)
                 })
             { focusState ->
                 inputFocused = inputFocused.copy(passwordFocused = focusState.isFocused)
             }
             AppButton(
-                style = if (state.isActiveButton) AppButtonStyle.Inactive else AppButtonStyle.Accent,
+                style = if (!state.isActiveButton) AppButtonStyle.Inactive else AppButtonStyle.Accent,
                 content = "Далее"
             ) {
                 onEvent(LoginEvent.LoginClicked)

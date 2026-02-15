@@ -3,7 +3,7 @@ package com.ncesam.sgk2026.domain.models
 data class CartItem(
     val id: Int,
     val title: String,
-    val quantity: String,
+    val quantity: Int,
     val hotel: String,
     val user: String,
     val perItem: Int,

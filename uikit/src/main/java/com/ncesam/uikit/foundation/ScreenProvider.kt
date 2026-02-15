@@ -2,6 +2,7 @@ package com.ncesam.uikit.foundation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.ncesam.uikit.components.AppSnackBar
 import kotlinx.coroutines.launch
 
@@ -34,7 +36,8 @@ fun ScreenProvider(content: @Composable () -> Unit) {
             content()
             SnackbarHost(
                 hostState = snackBarHostState,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.TopCenter).padding(40.dp)
+
             ) { data ->
                 AppSnackBar(data.visuals.message) { data.dismiss() }
             }

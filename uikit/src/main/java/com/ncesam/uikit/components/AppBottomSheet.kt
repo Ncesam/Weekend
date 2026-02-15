@@ -47,7 +47,6 @@ fun AppBottomSheet(
             sheetState = sheetState,
             containerColor = colors.white,
             contentColor = colors.white,
-            sheetGesturesEnabled = true,
             tonalElevation = 1.dp
         ) {
             Box(

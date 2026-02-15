@@ -6,11 +6,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HotelDto(
+    val collectionId: String,
     val id: String,
     val title: String,
     val description: String,
     @SerialName("sales_active") val salesActive: Boolean,
     val cost: Int,
     val facilities: List<String>,
-    val image: String
+    val image: String,
+    val category: String
 )

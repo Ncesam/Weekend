@@ -12,6 +12,7 @@ import com.ncesam.sgk2026.data.remote.AuthApi
 import com.ncesam.sgk2026.data.remote.BookingApi
 import com.ncesam.sgk2026.data.remote.HotelApi
 import com.ncesam.sgk2026.data.room.AppDatabase
+import com.ncesam.sgk2026.data.room.ShopCartDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -33,6 +34,9 @@ val apiModules = module {
             AppDatabase::class.java,
             "AppDatabase"
         ).build()
+    }
+    single<ShopCartDao> {
+        get<AppDatabase>().shopCartDao()
     }
 
     single<HotelApi> { get<Retrofit>().create(HotelApi::class.java) }

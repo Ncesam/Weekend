@@ -36,13 +36,14 @@ import com.ncesam.uikit.foundation.AppThemeProvider
 
 @Composable
 fun PrimaryAppCard(
-    image: Painter = painterResource(R.drawable.test_image),
+    image: Painter? = null,
     title: String = "Отель Белград",
     price: Int = 300,
     quantity: Int = 0,
     added: Boolean = false,
     onClick: () -> Unit
 ) {
+    val image = image ?: painterResource(R.drawable.test_image)
     val colors = AppTheme.colors
     val typography = AppTheme.typography
 
@@ -93,10 +94,11 @@ fun PrimaryAppCard(
 
 @Composable
 fun SmallAppCard(
-    image: Painter = painterResource(R.drawable.test_image),
+    image: Painter? = null,
     title: String = "Отель Белград",
     onClick: () -> Unit
 ) {
+    val image = image ?: painterResource(R.drawable.test_image)
     val colors = AppTheme.colors
     val typography = AppTheme.typography
 
@@ -148,7 +150,8 @@ fun CartAppCard(
             .width(340.dp)
             .shadow(2.dp, shape)
             .background(colors.white, shape)
-            .border(1.dp, colors.divider, shape).padding(16.dp),
+            .border(1.dp, colors.divider, shape)
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(54.dp),
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {

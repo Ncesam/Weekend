@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Train1" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Train1" parent="Theme.SplashScreen">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="postSplashScreenTheme">@style/Theme.Train1.Main</item>
+    </style>
+    <style name="Theme.Train1.Main" parent="Theme.AppCompat.DayNight.NoActionBar"/>
 </resources>

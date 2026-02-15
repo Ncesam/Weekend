@@ -20,5 +20,13 @@ class HotelRepositoryImpl(private val hotelApi: HotelApi, private val tokenManag
             ).map { hotels -> hotels }
         }
     }
+    override suspend fun getHotel(id: String): Result<Hotel> {
+        return tokenManager.getValidToken().map { token ->
+            return safeApiCall(
+                method = {hotelApi.getHotel(token, id)},
+                mapper = {hotelDto -> hotelDto.toDomain()}
+            ).map { hotel -> hotel }
+        }
+    }
 
 }

@@ -26,6 +26,6 @@ sealed interface LoginEvent {
 
 sealed interface LoginEffect {
     data class ShowSnackBar(val msg: String): LoginEffect
-    object GoToMain: LoginEffect
+    object GoToCreatePinCode: LoginEffect
     object GoToRegistration: LoginEffect
 }

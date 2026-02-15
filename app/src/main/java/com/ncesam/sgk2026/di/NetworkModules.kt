@@ -7,9 +7,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import java.util.prefs.Preferences
 
-const val BASE_URL = "http://localhost:8090/"
+const val BASE_URL = "http://192.168.0.109:8090/"
 
 val json = Json {
     ignoreUnknownKeys = true
@@ -19,7 +18,7 @@ val networkModules = module {
     single<OkHttpClient> {
         OkHttpClient.Builder().apply {
             val logging = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BASIC
+                level = HttpLoggingInterceptor.Level.BODY
             }
             addInterceptor(logging)
         }.build()

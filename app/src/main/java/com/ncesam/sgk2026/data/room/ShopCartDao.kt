@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.ncesam.sgk2026.domain.entity.CartItemEntity
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -15,7 +16,7 @@ interface ShopCartDao {
     suspend fun updateQuantity(id: Int, quantity: Int)
 
     @Query("SELECT * FROM shopCart")
-    suspend fun getAll(): List<CartItemEntity>
+    fun getAll(): Flow<List<CartItemEntity>>
 
     @Query("DELETE FROM shopCart WHERE id=:id")
     suspend fun deleteItem(id: Int)
