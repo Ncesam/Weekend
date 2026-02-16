@@ -1,5 +1,6 @@
 package com.ncesam.sgk2026.presentation.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.ncesam.sgk2026.data.remote.dto.UserForm
 import com.ncesam.sgk2026.data.utils.validateDate
@@ -27,34 +28,34 @@ class RegistrationViewModel(private val registrationUseCase: RegistrationUseCase
     suspend fun onEvent(event: RegistrationEvent) {
         when (event) {
             is RegistrationEvent.FirstNameChanged -> {
-                _state.update { state -> state.copy(firstName = event.value) }
+                _state.update { state -> state.copy(firstName = event.value.trim()) }
             }
 
             is RegistrationEvent.LastNameChanged -> {
-                _state.update { state -> state.copy(lastName = event.value) }
+                _state.update { state -> state.copy(lastName = event.value.trim()) }
             }
 
             is RegistrationEvent.FatherNameChanged -> {
-                _state.update { state -> state.copy(fatherName = event.value) }
+                _state.update { state -> state.copy(fatherName = event.value.trim()) }
             }
 
             is RegistrationEvent.BornChanged -> {
-                _state.update { state -> state.copy(born = event.value, bornError = null) }
+                _state.update { state -> state.copy(born = event.value.trim(), bornError = null) }
             }
 
             is RegistrationEvent.GenderChanged -> {
-                _state.update { state -> state.copy(gender = event.value) }
+                _state.update { state -> state.copy(gender = event.value.trim()) }
             }
 
             is RegistrationEvent.EmailChanged -> {
-                _state.update { state -> state.copy(email = event.value, emailError = null) }
+                _state.update { state -> state.copy(email = event.value.trim(), emailError = null) }
             }
 
             is RegistrationEvent.PasswordChanged -> {
-                val rules = validatePassword(event.value)
+                val rules = validatePassword(event.value.trim())
                 _state.update { state ->
                     state.copy(
-                        password = event.value,
+                        password = event.value.trim(),
                         passwordRules = rules,
                         passwordError = null
                     )
@@ -64,8 +65,8 @@ class RegistrationViewModel(private val registrationUseCase: RegistrationUseCase
             is RegistrationEvent.ConfirmPasswordChanged -> {
                 _state.update { state ->
                     state.copy(
-                        confirmPassword = event.value,
-                        passwordError = if (state.password != event.value) "Пароли не совпадают" else null
+                        confirmPassword = event.value.trim(),
+                        passwordError = if (state.password != event.value.trim()) "Пароли не совпадают" else null
                     )
                 }
             }
@@ -73,27 +74,32 @@ class RegistrationViewModel(private val registrationUseCase: RegistrationUseCase
 
             RegistrationEvent.GoToLogin -> {
                 try {
+                    if (!_state.value.passwordRules.passed) {
+                        return
+                    }
                     registrationUseCase(
                         UserForm(
                             _state.value.firstName,
                             _state.value.lastName,
                             _state.value.fatherName,
                             _state.value.born,
+                            true,
                             _state.value.gender,
                             "",
-                            _state.value.email,
+                            _state.value.email.lowercase(),
                             _state.value.password,
                             _state.value.confirmPassword,
                         )
                     )
                     _effect.send(RegistrationEffect.GoToLogin)
                 } catch (e: Exception) {
+                    Log.e("Test", e.message ?: "")
                     _effect.send(RegistrationEffect.ShowSnackBar("Ошибка при регистрации"))
                 }
             }
 
             RegistrationEvent.GoToPassword -> {
-                val emailError = if (!validateEmail(state.value.email)) "Email неверный" else null
+                val emailError = if (!validateEmail(state.value.email.lowercase())) "Email неверный" else null
                 val bornError =
                     if (validateDate(state.value.born) == null) "Дата неверная (2026-02-14)" else null
                 if (listOf(emailError, bornError).any { value -> value != null }) {
@@ -107,8 +113,7 @@ class RegistrationViewModel(private val registrationUseCase: RegistrationUseCase
                     }
                     return
                 }
-                onEvent(RegistrationEvent.GoToLogin)
-                _effect.send(RegistrationEffect.GoToLogin)
+                _effect.send(RegistrationEffect.GoToPassword)
             }
 
 

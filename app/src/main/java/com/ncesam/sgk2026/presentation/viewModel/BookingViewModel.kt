@@ -48,19 +48,19 @@ class BookingViewModel(
     suspend fun onEvent(event: BookingEvent) {
         when (event) {
             is BookingEvent.NameBookedChanged -> {
-                _state.update { state -> state.copy(nameBooked = event.value) }
+                _state.update { state -> state.copy(nameBooked = event.value.trim()) }
             }
 
             is BookingEvent.DateFromChanged -> {
-                _state.update { state -> state.copy(dateFrom = event.value) }
+                _state.update { state -> state.copy(dateFrom = event.value.trim()) }
             }
 
             is BookingEvent.DateToChanged -> {
-                _state.update { state -> state.copy(dateTo = event.value) }
+                _state.update { state -> state.copy(dateTo = event.value.trim()) }
             }
 
             is BookingEvent.PhoneChanged -> {
-                _state.update { state -> state.copy(phone = event.value) }
+                _state.update { state -> state.copy(phone = event.value.trim()) }
             }
 
             BookingEvent.AddToCart -> {

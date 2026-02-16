@@ -17,6 +17,7 @@ class AppSettingsRepositoryImpl(private val dataStore: DataStore<Preferences>): 
         val USER_ID_KEY: Preferences.Key<String> = stringPreferencesKey("USER_ID")
         val BIOMETRY_USED_KEY: Preferences.Key<Boolean> = booleanPreferencesKey("BIOMETRY_USED")
         val PIN_CODE_KEY: Preferences.Key<String> = stringPreferencesKey("PIN_CODE_KEY")
+        val NOTIFICATION_ACTIVE_KEY: Preferences.Key<Boolean> = booleanPreferencesKey("NOTIFICATION_ACTIVE")
     }
 
     override val userIdFlow: Flow<String> = dataStore.data.map { preferences -> preferences[USER_ID_KEY]?: "" }
@@ -44,6 +45,16 @@ class AppSettingsRepositoryImpl(private val dataStore: DataStore<Preferences>): 
 
         }
     }
+
+    override val notificationActiveFlow: Flow<Boolean> = dataStore.data.map { preferences -> preferences[NOTIFICATION_ACTIVE_KEY]?: true }
+
+    override suspend fun setNotificationActive(value: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[NOTIFICATION_ACTIVE_KEY] = value
+
+        }
+    }
+
 
 
 }

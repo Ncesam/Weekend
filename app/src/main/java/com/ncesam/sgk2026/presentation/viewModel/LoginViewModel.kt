@@ -20,11 +20,11 @@ class LoginViewModel(private val loginUseCase: LoginUseCase) : ViewModel() {
     suspend fun onEvent(event: LoginEvent) {
         when (event) {
             is LoginEvent.EmailChanged -> {
-                _state.update { state -> state.copy(email = event.value, emailError = null) }
+                _state.update { state -> state.copy(email = event.value.trim(), emailError = null) }
             }
 
             is LoginEvent.PasswordChanged -> {
-                _state.update { state -> state.copy(password = event.value, passwordError = null) }
+                _state.update { state -> state.copy(password = event.value.trim(), passwordError = null) }
             }
 
             LoginEvent.OAuthClicked -> {
@@ -37,7 +37,7 @@ class LoginViewModel(private val loginUseCase: LoginUseCase) : ViewModel() {
 
             LoginEvent.LoginClicked -> {
                 try {
-                    loginUseCase(email = _state.value.email, password = _state.value.password)
+                    loginUseCase(email = _state.value.email.lowercase(), password = _state.value.password)
                     _effect.send(LoginEffect.GoToCreatePinCode)
                 } catch (e: Exception) {
                     val emailError = "Email неверный"

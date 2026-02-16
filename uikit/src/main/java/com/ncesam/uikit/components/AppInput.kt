@@ -13,12 +13,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -135,7 +138,8 @@ fun AppInputSearch(
     errorText: String? = null,
 
     onChangeText: (text: String) -> Unit,
-    onFocusChanged: (state: FocusState) -> Unit
+    onSearch: () -> Unit,
+    onFocusChanged: (state: FocusState) -> Unit,
 ) {
     val colors = AppTheme.colors
     val typography = AppTheme.typography
@@ -186,6 +190,10 @@ fun AppInputSearch(
                 modifier = Modifier
                     .weight(1f)
                     .onFocusChanged(onFocusChanged),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(onSearch = {
+                    onSearch()
+                }),
                 decorationBox = { innerTextField ->
                     Box(contentAlignment = Alignment.CenterStart) {
                         if (!isFilled) {
@@ -210,7 +218,7 @@ fun PreviewAppInput() {
         Column {
             AppInput(onChangeText = {}, onClickVisibility = {}) { }
             AppInput(type = AppInputType.Password, visiblePassword = false, value = "543534", onChangeText = {}, onClickVisibility = {}) { }
-            AppInputSearch(onChangeText = {}) { }
+            AppInputSearch(onChangeText = {}, onSearch = {}) { }
         }
     }
 }

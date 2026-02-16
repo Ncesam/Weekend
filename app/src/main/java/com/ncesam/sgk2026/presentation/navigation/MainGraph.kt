@@ -7,6 +7,7 @@ import com.ncesam.sgk2026.domain.navigation.AppRoute
 import com.ncesam.sgk2026.presentation.screens.BookingScreen
 import com.ncesam.sgk2026.presentation.screens.MainScreen
 import com.ncesam.sgk2026.presentation.screens.PinCodeScreen
+import com.ncesam.sgk2026.presentation.screens.SearchScreen
 import com.ncesam.sgk2026.presentation.screens.ShopCartScreen
 import com.ncesam.sgk2026.presentation.screens.TravelsScreen
 
@@ -28,6 +29,10 @@ fun NavGraphBuilder.mainGraph() {
         }
         composable<AppRoute.Travels> {
             TravelsScreen()
+        }
+
+        composable<AppRoute.Search> {
+            SearchScreen()
         }
     }
 }

@@ -136,6 +136,10 @@ fun MainContent(state: MainState, onEvent: (MainEvent) -> Unit) {
                         value = state.search,
                         placeholder = "Искать описание",
                         onChangeText = { text -> onEvent(MainEvent.SearchChanged(text)) },
+                        onSearch = {
+                            searchFocused = false
+                            onEvent(MainEvent.GoToSearch)
+                        },
                         onFocusChanged = { focusState -> searchFocused = focusState.isFocused })
                 }
                 Icon(

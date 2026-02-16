@@ -82,7 +82,7 @@ fun CreateProfileScreen(viewModel: RegistrationViewModel) {
 
 @Composable
 fun CreateProfileContent(state: RegistrationState, onEvent: (RegistrationEvent) -> Unit) {
-    var inputFocused = remember { RegistrationInputState() }
+    var inputFocused by remember { mutableStateOf(RegistrationInputState()) }
     var sheetExpanded by remember { mutableStateOf(false) }
     val colors = AppTheme.colors
     val typography = AppTheme.typography

@@ -6,6 +6,7 @@ import com.ncesam.sgk2026.presentation.viewModel.LoginViewModel
 import com.ncesam.sgk2026.presentation.viewModel.MainViewModel
 import com.ncesam.sgk2026.presentation.viewModel.PinCodeViewModel
 import com.ncesam.sgk2026.presentation.viewModel.RegistrationViewModel
+import com.ncesam.sgk2026.presentation.viewModel.SearchViewModel
 import com.ncesam.sgk2026.presentation.viewModel.ShopCartViewModel
 import com.ncesam.sgk2026.presentation.viewModel.SplashViewModel
 import com.ncesam.sgk2026.presentation.viewModel.TravelsViewModel
@@ -23,5 +24,6 @@ val viewModelModules = module {
     viewModel<BookingViewModel> { BookingViewModel(get(), get(), get(), get()) }
     viewModel<ShopCartViewModel> { ShopCartViewModel(get())}
     viewModel<TravelsViewModel> { TravelsViewModel(get(), get())}
+    viewModel<SearchViewModel> { SearchViewModel(get(), get())}
 //    viewModel<ProfileViewModel> { ProfileViewModel(get())}
 }

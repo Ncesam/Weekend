@@ -10,6 +10,7 @@ data class UserForm(
     @SerialName("last_name") val lastName: String,
     @SerialName("father_name") val fatherName: String,
     val born: String,
+    val emailVisibility: Boolean,
     val gender: String,
     val avatar: String,
     val email: String,

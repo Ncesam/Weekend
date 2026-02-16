@@ -1,6 +1,7 @@
 package com.ncesam.sgk2026.data.mappers
 
 import com.ncesam.sgk2026.data.remote.dto.UserDto
+import com.ncesam.sgk2026.di.BASE_URL
 import com.ncesam.sgk2026.domain.models.User
 
 fun UserDto.toDomain(): User {
@@ -12,6 +13,6 @@ fun UserDto.toDomain(): User {
         fatherName,
         born,
         gender,
-        avatar
+        avatar = "${BASE_URL}api/files/$collectionId/$id/$avatar",
     )
 }
