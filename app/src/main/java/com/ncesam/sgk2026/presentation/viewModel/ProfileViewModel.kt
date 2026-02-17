@@ -1,5 +1,6 @@
 package com.ncesam.sgk2026.presentation.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ncesam.sgk2026.data.utils.formatDate
@@ -23,7 +24,22 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
 
     init {
         viewModelScope.launch {
-
+            userRepository.getUser()
+                .onSuccess { user ->
+                    Log.d("Test", user.avatar)
+                    _state.update { state ->
+                        state.copy(
+                            firstName = user.firstName,
+                            email = user.email,
+                            dateInfo = formatDate(
+                                validateDate(user.born) ?: return@onSuccess
+                            ),
+                            gender = user.gender.slice((0..3)),
+                            notificationActive = userRepository.getNotificationActive()
+                        )
+                    }
+                }
+                .onFailure { _effect.send(ProfileEffect.ShowSnackBar("Проверьте подключение к интернету")) }
         }
     }
 
@@ -40,19 +56,27 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
                     _state.update { state ->
                         state.copy(
                             avatar = user.avatar,
-                            firstName = user.firstName,
-                            email = user.email,
-                            dateInfo = formatDate(
-                                validateDate(user.born) ?: return@onSuccess
-                            ),
-                            gender = user.gender.slice((0..3)),
-                            notificationActive = userRepository.getNotificationActive()
                         )
                     }
                 }
             }
 
-            else -> {}
+            ProfileEvent.NotificationToggle -> {
+                userRepository.setNotificationActive(!_state.value.notificationActive)
+            }
+
+            ProfileEvent.PolicyClicked -> {
+                _effect.send(ProfileEffect.ShowSnackBar("Не реализовано"))
+            }
+
+            ProfileEvent.TermsOfServesClicked -> {
+                _effect.send(ProfileEffect.ShowSnackBar("Не реализовано"))
+            }
+
+            ProfileEvent.LogoutClicked -> {
+                userRepository.logout()
+                _effect.send(ProfileEffect.GoToLogin)
+            }
 
         }
     }

@@ -13,4 +13,6 @@ interface UserRepository {
     suspend fun getUser(): Result<User>
 
     suspend fun getNotificationActive(): Boolean
+    suspend fun setNotificationActive(value: Boolean)
+    suspend fun logout()
 }

@@ -24,5 +24,5 @@ val repositoryModules = module {
     single<TokenManager> { TokenManagerImpl(get(), get()) }
     single<ShopCartRepository> { ShopCartRepositoryImpl(get(), get(), get()) }
     single<AppSettingsRepository> { AppSettingsRepositoryImpl(get()) }
-    single<UserRepository> { UserRepositoryImpl(get(), get(), get()) }
+    single<UserRepository> { UserRepositoryImpl(get(), get(), get(), get()) }
 }
