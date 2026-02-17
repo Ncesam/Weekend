@@ -11,6 +11,7 @@ import androidx.room.Room
 import com.ncesam.sgk2026.data.remote.AuthApi
 import com.ncesam.sgk2026.data.remote.BookingApi
 import com.ncesam.sgk2026.data.remote.HotelApi
+import com.ncesam.sgk2026.data.remote.UserApi
 import com.ncesam.sgk2026.data.room.AppDatabase
 import com.ncesam.sgk2026.data.room.ShopCartDao
 import kotlinx.coroutines.CoroutineScope
@@ -42,4 +43,5 @@ val apiModules = module {
     single<HotelApi> { get<Retrofit>().create(HotelApi::class.java) }
     single<BookingApi> { get<Retrofit>().create(BookingApi::class.java) }
     single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
+    single<UserApi> { get<Retrofit>().create(UserApi::class.java) }
 }

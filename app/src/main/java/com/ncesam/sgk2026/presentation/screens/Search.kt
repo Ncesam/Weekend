@@ -88,8 +88,7 @@ fun SearchContent(state: SearchState, onEvent: (SearchEvent) -> Unit) {
             .fillMaxSize()
             .background(colors.white)
             .statusBarsPadding()
-            .padding(horizontal = 20.dp)
-            .padding(bottom = 24.dp),
+            .padding(horizontal = 20.dp, vertical = 28.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

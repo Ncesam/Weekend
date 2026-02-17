@@ -5,6 +5,7 @@ import com.ncesam.sgk2026.presentation.viewModel.CreatePinCodeViewModel
 import com.ncesam.sgk2026.presentation.viewModel.LoginViewModel
 import com.ncesam.sgk2026.presentation.viewModel.MainViewModel
 import com.ncesam.sgk2026.presentation.viewModel.PinCodeViewModel
+import com.ncesam.sgk2026.presentation.viewModel.ProfileViewModel
 import com.ncesam.sgk2026.presentation.viewModel.RegistrationViewModel
 import com.ncesam.sgk2026.presentation.viewModel.SearchViewModel
 import com.ncesam.sgk2026.presentation.viewModel.ShopCartViewModel
@@ -25,5 +26,5 @@ val viewModelModules = module {
     viewModel<ShopCartViewModel> { ShopCartViewModel(get())}
     viewModel<TravelsViewModel> { TravelsViewModel(get(), get())}
     viewModel<SearchViewModel> { SearchViewModel(get(), get())}
-//    viewModel<ProfileViewModel> { ProfileViewModel(get())}
+    viewModel<ProfileViewModel> { ProfileViewModel(get())}
 }

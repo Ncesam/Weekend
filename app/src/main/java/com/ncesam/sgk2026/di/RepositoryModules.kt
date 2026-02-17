@@ -6,12 +6,14 @@ import com.ncesam.sgk2026.data.repository.BookingRepositoryImpl
 import com.ncesam.sgk2026.data.repository.HotelRepositoryImpl
 import com.ncesam.sgk2026.data.repository.ShopCartRepositoryImpl
 import com.ncesam.sgk2026.data.repository.TokenManagerImpl
+import com.ncesam.sgk2026.data.repository.UserRepositoryImpl
 import com.ncesam.sgk2026.domain.repository.AppSettingsRepository
 import com.ncesam.sgk2026.domain.repository.AuthRepository
 import com.ncesam.sgk2026.domain.repository.BookingRepository
 import com.ncesam.sgk2026.domain.repository.HotelRepository
 import com.ncesam.sgk2026.domain.repository.ShopCartRepository
 import com.ncesam.sgk2026.domain.repository.TokenManager
+import com.ncesam.sgk2026.domain.repository.UserRepository
 import org.koin.dsl.module
 
 
@@ -22,4 +24,5 @@ val repositoryModules = module {
     single<TokenManager> { TokenManagerImpl(get(), get()) }
     single<ShopCartRepository> { ShopCartRepositoryImpl(get(), get(), get()) }
     single<AppSettingsRepository> { AppSettingsRepositoryImpl(get()) }
+    single<UserRepository> { UserRepositoryImpl(get(), get(), get()) }
 }
